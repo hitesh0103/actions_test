@@ -1,20 +1,20 @@
-on: [push]
+name: Python Tests
 
-name: ARMv7 build
+on: [push, pull_request]
 
 jobs:
-  linux_arm7:
-    name: Linux ARMv7
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          toolchain: stable
-          target: armv7-unknown-linux-gnueabihf
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          use-cross: true
-          command: build
-          args: --target armv7-unknown-linux-gnueabihf
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install pytest
+      - name: Test with pytest
+        run: pytest
+
