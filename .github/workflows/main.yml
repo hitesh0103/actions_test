@@ -1,27 +1,18 @@
----
-
+# Your workflow name.
 name: Python Tests
 
 on: [push, pull_request]
 
 jobs:
-  super-lint:
-    name: Lint code base
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    
-    - name: Run Super-Linter
-      uses: github/super-linter@v4
-      env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: tests
-      run: pytest
+  build:
+      runs-on: ubuntu-latest
+      steps:
+      # Check-out your repository.
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'      
+      - name: tests
+        run: pytest
